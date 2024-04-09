@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 export default function App() {
   const [inputValue, setInputValue] = useState("");
+  console.log(inputValue);
 
   const handleChange = (evt) => {
     setInputValue(evt.target.value.trim());
@@ -10,7 +11,7 @@ export default function App() {
 
   return (
     <>
-      <SearchBar onSubmit={handleChange} />
+      <SearchBar inputValue={inputValue} onSubmit={handleChange} />
     </>
   );
 }
