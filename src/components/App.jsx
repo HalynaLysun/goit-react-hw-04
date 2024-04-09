@@ -5,13 +5,12 @@ export default function App() {
   const [inputValue, setInputValue] = useState("");
 
   const handleChange = (evt) => {
-    // setInputValue(evt.target.value);
-    console.log(evt);
+    setInputValue(evt.target.value.trim());
   };
 
   return (
     <>
-      <SearchBar input={inputValue} onSubmit={handleChange} />
+      <SearchBar onSubmit={handleChange} />
     </>
   );
 }

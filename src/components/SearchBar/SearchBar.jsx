@@ -5,15 +5,14 @@ export default function SearchBar({ onSubmit }) {
     <header>
       <form>
         <input
+          onChange={onSubmit}
           id="nameCard"
           type="text"
           autoComplete="off"
           autoFocus
           placeholder="Search images and photos"
         />
-        <button type="submit" onSubmit={onSubmit}>
-          Search
-        </button>
+        <button type="submit">Search</button>
       </form>
     </header>
   );
