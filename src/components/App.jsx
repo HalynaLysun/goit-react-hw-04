@@ -6,8 +6,6 @@ import { useState, useEffect } from "react";
 export default function App() {
   const [inputValue, setInputValue] = useState("");
   const [images, setImages] = useState([]);
-  // console.log(images);
-  // console.log(inputValue);
 
   const handleChange = (evt) => {
     setInputValue(evt.target.value.trim());
@@ -15,14 +13,14 @@ export default function App() {
 
   useEffect(() => {
     async function fetchImages() {
-      const URL =
-        "https://api.unsplash.com/search/photos/?client_id=cpMrNbJR9hAZfCOvirw9MRq6_gAnEEUzO53Wjet5MRo&page=1&query=woman";
-      const response = await axios.get(URL);
-      console.log(response.data.user);
+      const val = inputValue;
+      const key = "cpMrNbJR9hAZfCOvirw9MRq6_gAnEEUzO53Wjet5MRo";
+      const url = `https://api.unsplash.com/search/photos/?client_id=${key}&page=1&query=${val}`;
+      const response = await axios.get(url);
       setImages(response.data.results);
     }
     fetchImages();
-  }, []);
+  }, [inputValue]);
 
   return (
     <>
