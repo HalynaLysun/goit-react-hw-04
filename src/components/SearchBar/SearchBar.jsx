@@ -6,6 +6,7 @@ export default function SearchBar({ inputValue, onSubmit }) {
     {
       evt.preventDefault();
       const notify = () => toast("Please enter the text to search for images!");
+      console.log(inputValue);
       {
         inputValue === "" && notify();
       }
