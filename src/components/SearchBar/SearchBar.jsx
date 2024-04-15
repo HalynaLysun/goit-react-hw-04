@@ -1,24 +1,27 @@
 import css from "./SearchBar.module.css";
 import toast, { Toaster } from "react-hot-toast";
 
-export default function SearchBar({ inputValue, onSubmit }) {
-  function chekValue(evt) {
+export default function SearchBar({ onSubmit }) {
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    const form = evt.target;
+    const query = form.elements.search.value.trim();
+    const notify = () => toast("Please enter the text to search for images!");
+
     {
-      evt.preventDefault();
-      const notify = () => toast("Please enter the text to search for images!");
-      console.log(inputValue);
-      {
-        inputValue === "" && notify();
-      }
+      query === "" && notify();
     }
+
+    onSubmit(query);
+
+    form.reset();
   }
   return (
     <header>
-      <form onSubmit={chekValue}>
+      <form onSubmit={handleSubmit}>
         <Toaster />
         <input
-          onChange={onSubmit}
-          id="nameCard"
+          name="search"
           type="text"
           autoComplete="off"
           autoFocus
