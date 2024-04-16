@@ -2,7 +2,8 @@ import SearchBar from "./SearchBar/SearchBar";
 import ImageGallery from "./ImageGallery/ImageGallery";
 import ErrorMessage from "./ErrorMessage/ErrorMessage";
 import Loader from "./Loader/Loader";
-import axios from "axios";
+import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn";
+import fetchImages from "../images-api";
 import { useState, useEffect } from "react";
 
 export default function App() {
@@ -10,27 +11,28 @@ export default function App() {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [page, setPage] = useState(1);
 
   const handleChange = (newInputValue) => {
     setInputValue(newInputValue);
   };
 
   useEffect(() => {
-    async function fetchImages() {
+    async function fetchImagesGallery() {
       try {
         setLoading(true);
-        const val = inputValue;
-        const key = "cpMrNbJR9hAZfCOvirw9MRq6_gAnEEUzO53Wjet5MRo";
-        const url = `https://api.unsplash.com/search/photos/?client_id=${key}&page=1&query=${val}`;
-        const response = await axios.get(url);
-        setImages(response.data.results);
+        const data = await fetchImages(inputValue, page);
+        const newImages = data.results;
+        setImages(newImages);
+        // setImages((prevImages) => [...prevImages, ...newImages]);
+        // setPage((prevPage) => prevPage + 1);
       } catch (error) {
         setError(true);
       } finally {
         setLoading(false);
       }
     }
-    fetchImages();
+    fetchImagesGallery();
   }, [inputValue]);
 
   return (
@@ -39,6 +41,7 @@ export default function App() {
       {images.length > 0 && <ImageGallery images={images} />}
       {loading && <Loader />}
       {error && <ErrorMessage />}
+      {images.length !== 0 && <LoadMoreBtn />}
     </>
   );
 }

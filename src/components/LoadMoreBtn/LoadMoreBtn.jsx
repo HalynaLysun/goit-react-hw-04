@@ -1,5 +1,9 @@
 import css from "./LoadMoreBtn.module.css";
 
 export default function LoadMoreBtn() {
-  return <></>;
+  return (
+    <>
+      <button>Load more</button>
+    </>
+  );
 }
