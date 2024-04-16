@@ -20,7 +20,7 @@ export default function App() {
   };
 
   const handleLoadMore = () => {
-    setPage((prevPage) => prevPage + 1);
+    setPage(page + 1);
   };
 
   useEffect(() => {
@@ -32,7 +32,6 @@ export default function App() {
         setLoading(true);
         const data = await fetchImages(inputValue, page);
         const newImages = data.results;
-        setImages(newImages);
         setImages((prevImages) => [...prevImages, ...newImages]);
       } catch (error) {
         setError(true);
@@ -49,7 +48,9 @@ export default function App() {
       {images.length > 0 && <ImageGallery images={images} />}
       {loading && <Loader />}
       {error && <ErrorMessage />}
-      {images.length > 0 && <LoadMoreBtn onClick={handleLoadMore} />}
+      {images.length === 10 && !loading && (
+        <LoadMoreBtn onClick={handleLoadMore} />
+      )}
     </>
   );
 }
