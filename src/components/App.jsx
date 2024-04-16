@@ -15,17 +15,25 @@ export default function App() {
 
   const handleChange = (newInputValue) => {
     setInputValue(newInputValue);
+    setPage(1);
+    setImages([]);
+  };
+
+  const handleLoadMore = () => {
+    setPage((prevPage) => prevPage + 1);
   };
 
   useEffect(() => {
     async function fetchImagesGallery() {
       try {
+        if (!inputValue) {
+          return;
+        }
         setLoading(true);
         const data = await fetchImages(inputValue, page);
         const newImages = data.results;
         setImages(newImages);
-        // setImages((prevImages) => [...prevImages, ...newImages]);
-        // setPage((prevPage) => prevPage + 1);
+        setImages((prevImages) => [...prevImages, ...newImages]);
       } catch (error) {
         setError(true);
       } finally {
@@ -33,7 +41,7 @@ export default function App() {
       }
     }
     fetchImagesGallery();
-  }, [inputValue]);
+  }, [inputValue, page]);
 
   return (
     <>
@@ -41,7 +49,7 @@ export default function App() {
       {images.length > 0 && <ImageGallery images={images} />}
       {loading && <Loader />}
       {error && <ErrorMessage />}
-      {images.length !== 0 && <LoadMoreBtn />}
+      {images.length > 0 && <LoadMoreBtn onClick={handleLoadMore} />}
     </>
   );
 }

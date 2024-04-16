@@ -3,7 +3,7 @@ import css from "./ImageGallery.module.css";
 
 export default function ImageGallery({ images }) {
   return (
-    <ul>
+    <ul className={css.list}>
       {images.map((el) => {
         return (
           <li key={el.id}>
