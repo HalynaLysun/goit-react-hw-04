@@ -48,7 +48,7 @@ export default function App() {
       {images.length > 0 && <ImageGallery images={images} />}
       {loading && <Loader />}
       {error && <ErrorMessage />}
-      {images.length === 10 && !loading && (
+      {images.length > 0 && !loading && (
         <LoadMoreBtn onClick={handleLoadMore} />
       )}
     </>
