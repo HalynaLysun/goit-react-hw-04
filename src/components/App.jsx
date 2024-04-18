@@ -3,6 +3,7 @@ import ImageGallery from "./ImageGallery/ImageGallery";
 import ErrorMessage from "./ErrorMessage/ErrorMessage";
 import Loader from "./Loader/Loader";
 import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn";
+import ImageModal from "./ImageModal/ImageModal";
 import fetchImages from "../images-api";
 import { useState, useEffect } from "react";
 
@@ -12,6 +13,7 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [page, setPage] = useState(1);
+  const [modal, setModal] = useState(false);
 
   const handleChange = (newInputValue) => {
     setInputValue(newInputValue);
@@ -42,6 +44,10 @@ export default function App() {
     fetchImagesGallery();
   }, [inputValue, page]);
 
+  const handleOpenModal = () => {
+    setModal(true);
+  };
+
   return (
     <>
       <SearchBar onSubmit={handleChange} />
@@ -51,6 +57,11 @@ export default function App() {
       {images.length > 0 && !loading && (
         <LoadMoreBtn onClick={handleLoadMore} />
       )}
+      <ImageModal
+        onClick={handleOpenModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      />
     </>
   );
 }
