@@ -14,6 +14,7 @@ export default function App() {
   const [error, setError] = useState(false);
   const [page, setPage] = useState(1);
   const [modal, setModal] = useState(false);
+  const [imageModal, setImageModal] = useState("");
 
   const handleChange = (newInputValue) => {
     setInputValue(newInputValue);
@@ -44,24 +45,23 @@ export default function App() {
     fetchImagesGallery();
   }, [inputValue, page]);
 
-  const handleOpenModal = () => {
-    setModal(true);
+  const handleModal = (imageUrl) => {
+    setModal(!modal);
+    setImageModal(imageUrl);
   };
 
   return (
     <>
       <SearchBar onSubmit={handleChange} />
-      {images.length > 0 && <ImageGallery images={images} />}
+      {images.length > 0 && (
+        <ImageGallery images={images} onClick={handleModal} />
+      )}
       {loading && <Loader />}
       {error && <ErrorMessage />}
       {images.length > 0 && !loading && (
         <LoadMoreBtn onClick={handleLoadMore} />
       )}
-      <ImageModal
-        onClick={handleOpenModal}
-        style={customStyles}
-        contentLabel="Example Modal"
-      />
+      <ImageModal isOpen={modal} onClick={handleModal} imageUrl={imageModal} />
     </>
   );
 }
