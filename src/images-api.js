@@ -8,7 +8,7 @@ export default async function fetchImages(query, page) {
     params: {
       query: query,
       page: page,
-      per_page: 10,
+      per_page: 14,
       client_id: KEY,
       orientation: "landscape",
     },
